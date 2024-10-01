@@ -7,3 +7,5 @@ Steps to run the application:
 Recommended node version: 14.21.3
 
 Additional feature: Drag and Drop
+
+If you don't want to locally clone the code then go through https://book-shelves-2.netlify.app/ for demo as I deployed this code on Netlify.
