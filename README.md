@@ -1,5 +1,7 @@
 # book-shelves
 
+Command to clone the application: git clone https://github.com/Mayank-contradiction/book-shelves.git
+
 Steps to run the application: 
  1. Run command "nmp install" on root level.
  2. Run command "npm start" on root level.
