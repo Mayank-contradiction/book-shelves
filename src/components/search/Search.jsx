@@ -59,18 +59,18 @@ function Search() {
         </div>
       </div>
       <div className="search-books-results">
+        {searchResults.loading ? (
+          <p>Loading the data....</p>
+        ) : searchResults.error ? (
+          <p className="text-danger">There was an error with API call.</p>
+        ) : (
+          query && searchResults.data.length === 0 && <p>No results found.</p>
+        )}
         <ol className="books-grid">
           {searchResults.data?.length !== 0 &&
             searchResults.data.map((book) => (
               <BookListItem key={book.id} bookId={book.id} />
             ))}
-          {searchResults.loading ? (
-            <p>Loading the data....</p>
-          ) : searchResults.error ? (
-            <p className="text-danger">There was an error with API call.</p>
-          ) : (
-            query && searchResults.data.length === 0 && <p>No results found.</p>
-          )}
         </ol>
       </div>
     </div>
