@@ -4,23 +4,42 @@ import BookListItem from "../book/BookListItem";
 import { useEffect, useState } from "react";
 
 function Search() {
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState({
+    data: [],
+    error: false,
+    loading: false,
+  });
   const [query, setQuery] = useState("");
 
   useEffect(() => {
     const searchBooks = async () => {
+      setSearchResults((prev) => ({
+        ...prev,
+        loading: true,
+      }));
       const results = await search(query);
       if (results.error) {
-        setSearchResults([]);
-        alert("Some Backend Error Occured!");
-        return;
+        setSearchResults({
+          data: [],
+          error: true,
+          loading: false,
+        });
+      } else {
+        setSearchResults({
+          data: results,
+          error: false,
+          loading: false,
+        });
       }
-      setSearchResults(results);
     };
     if (query) {
       searchBooks();
     } else {
-      setSearchResults([]);
+      setSearchResults({
+        data: [],
+        error: false,
+        loading: false,
+      });
     }
   }, [query]);
 
@@ -41,12 +60,16 @@ function Search() {
       </div>
       <div className="search-books-results">
         <ol className="books-grid">
-          {searchResults?.length !== 0 ? (
-            searchResults.map((book) => (
+          {searchResults.data?.length !== 0 &&
+            searchResults.data.map((book) => (
               <BookListItem key={book.id} bookId={book.id} />
-            ))
+            ))}
+          {searchResults.loading ? (
+            <p>Loading the data....</p>
+          ) : searchResults.error ? (
+            <p className="text-danger">There was an error with API call.</p>
           ) : (
-            <p>No results found</p>
+            query && searchResults.data.length === 0 && <p>No results found.</p>
           )}
         </ol>
       </div>
